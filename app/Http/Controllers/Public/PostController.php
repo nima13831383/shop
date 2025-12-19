@@ -14,11 +14,10 @@ class PostController  extends Controller
 
     public function index()
     {
-        return Post::where('published', true)
-            ->latest()
+        $posts = Post::latest()->with(['author','categories']) // eager loading
             ->paginate(10);
+        return view('admin.post.post-index', compact('posts'));
     }
-
     /**
      * Display the specified resource.
      */
