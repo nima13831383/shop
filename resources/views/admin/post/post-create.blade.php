@@ -89,7 +89,7 @@ Steps START -->
                 <div class="card-body">
                     <!-- Step content START -->
                     <div class="bs-stepper-content">
-                        <form action="{{ route('admin.posts.store') }}" method="POST"  enctype="multipart/form-data">
+                        <form action="{{ route('admin.posts.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <!-- Step 1 content START -->
                             <div id="step-1" role="tabpanel" class="content fade" aria-labelledby="steppertrigger1">
@@ -107,10 +107,10 @@ Steps START -->
                                     </div>
 
                                     <!-- Short description -->
-                                    <div class="col-12">
+                                    <!-- <div class="col-12">
                                         <label class="form-label">Short description</label>
                                         <textarea class="form-control" rows="2" placeholder="Enter keywords" name="body">{{ old('body') }}</textarea>
-                                    </div>
+                                    </div> -->
 
                                     <!-- Course category -->
                                     <div class="col-md-6">
@@ -158,45 +158,18 @@ Steps START -->
 
 
                                     <!-- Course description -->
-                                    <div class="col-12">
-                                        <label class="form-label">body</label>
-                                        <!-- Editor toolbar -->
-                                        <div class="bg-light border border-bottom-0 rounded-top py-3" id="quilltoolbar">
-                                            <span class="ql-formats">
-                                                <select class="ql-size"></select>
-                                            </span>
-                                            <span class="ql-formats">
-                                                <button class="ql-bold"></button>
-                                                <button class="ql-italic"></button>
-                                                <button class="ql-underline"></button>
-                                                <button class="ql-strike"></button>
-                                            </span>
-                                            <span class="ql-formats">
-                                                <select class="ql-color"></select>
-                                                <select class="ql-background"></select>
-                                            </span>
-                                            <span class="ql-formats">
-                                                <button class="ql-code-block"></button>
-                                            </span>
-                                            <span class="ql-formats">
-                                                <button class="ql-list" value="ordered"></button>
-                                                <button class="ql-list" value="bullet"></button>
-                                                <button class="ql-indent" value="-1"></button>
-                                                <button class="ql-indent" value="+1"></button>
-                                            </span>
-                                            <span class="ql-formats">
-                                                <button class="ql-link"></button>
-                                                <button class="ql-image"></button>
-                                            </span>
-                                            <span class="ql-formats">
-                                                <button class="ql-clean"></button>
-                                            </span>
-                                        </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Body</label>
 
-                                        <!-- Main toolbar -->
-                                        <div class="bg-body border rounded-bottom h-400px overflow-hidden" id="quilleditor">
-                                        </div>
+                                        <textarea name="body" id="body" class="form-control" rows="10">
+                                        {{ old('body', $post->body ?? '') }}
+                                        </textarea>
+
+                                        @error('body')
+                                        <div class="text-danger mt-1">{{ $message }}</div>
+                                        @enderror
                                     </div>
+
 
                                     <!-- Step 1 button -->
                                     <div class="d-flex justify-content-end mt-3">
@@ -275,4 +248,25 @@ Steps END -->
 <script src="{{ asset('assets/vendor/quill/js/quill.min.js') }}"></script>
 <script src="{{ asset('assets/vendor/stepper/js/bs-stepper.min.js') }}"></script>
 <script src="{{ asset('assets/js/functions.js') }}"></script>
+<script src="https://cdn.ckeditor.com/ckeditor5/41.3.1/classic/ckeditor.js"></script>
+
+<script>
+    ClassicEditor
+        .create(document.querySelector('#body'), {
+            language: 'fa',
+            toolbar: [
+                'heading', '|',
+                'bold', 'italic', 'underline', 'link',
+                'bulletedList', 'numberedList', '|',
+                'insertTable', 'imageUpload', 'blockQuote', '|',
+                'undo', 'redo'
+            ],
+            ckfinder: {
+                uploadUrl: '{{ route("ckeditor.upload") }}?_token={{ csrf_token() }}'
+            }
+        })
+        .catch(error => {
+            console.error(error);
+        });
+</script>
 @endsection

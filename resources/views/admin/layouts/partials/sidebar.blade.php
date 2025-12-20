@@ -21,7 +21,7 @@
             <ul class="navbar-nav flex-column" id="navbar-sidebar">
                 <!-- Menu item 1 -->
                 <li class="nav-item">
-                    <a href="admin-dashboard.html" class="nav-link active"><i class="bi bi-house fa-fw me-2"></i>Dashboard</a>
+                    <a href="{{ route('admin.home') }}" class="nav-link active"><i class="bi bi-house fa-fw me-2"></i>Dashboard</a>
                 </li>
 
                 <!-- Title -->
@@ -51,6 +51,9 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="">Post Detail</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('admin.posts.trashed') }}">trashed</a>
                         </li>
                     </ul>
                 </li>
@@ -173,7 +176,7 @@
                     </a>
                     <a
                         class="h5 mb-0 text-body"
-                        href="sign-in.html"
+                        href="{{ route('logout') }}"
                         data-bs-toggle="tooltip"
                         data-bs-placement="top"
                         title="Sign out">

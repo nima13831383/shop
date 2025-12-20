@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Mews\Purifier\Facades\Purifier;
 use Illuminate\Support\Facades\DB;
 use Throwable;
 use App\Models\Post;
@@ -14,14 +15,28 @@ use Illuminate\Support\Facades\Log;
 class PostController  extends Controller
 {
 
+    public function trashed()
+    {
+        $posts = Post::onlyTrashed() // فقط پست‌های Soft Deleted
+            ->latest()
+            ->with(['author', 'categories'])
+            ->paginate(10);
+
+        return view('admin.post.post-trash', compact('posts'));
+    }
 
 
+    public function index()
+    {
+        $posts = Post::latest()->with(['author', 'categories']) // eager loading
+            ->paginate(10);
+        return view('admin.post.post-index', compact('posts'));
+    }
     // POST - فقط admin
     public function store(Request $request)
     {
         try {
             $this->authorize('create', Post::class);
-
             DB::beginTransaction();
 
             $data = $request->validate([
@@ -37,7 +52,7 @@ class PostController  extends Controller
 
             $data['slug'] = Str::slug($data['title']);
             $data['user_id'] = Auth::id();
-
+            $data['body'] = Purifier::clean($data['body']);
             if ($request->hasFile('image')) {
                 $data['image'] = $request->file('image')->store('posts', 'public');
             }
@@ -147,6 +162,20 @@ class PostController  extends Controller
 
         $post->restore();
 
-        return response()->json(['message' => 'Post restored']);
+        return redirect()
+            ->route('admin.posts.trashed')
+            ->with('success', 'Post restored successfully');
+    }
+    public function forcedelete($id)
+    {
+        $post = Post::withTrashed()->findOrFail($id);
+
+        $this->authorize('forceDelete', $post);
+
+        $post->forceDelete();
+
+        return redirect()
+            ->route('admin.posts.trashed')
+            ->with('success', 'Post deleted successfully');
     }
 }

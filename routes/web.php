@@ -3,7 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\public\PostController as PostControllerPublic;
-
+use \Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 // php artisan vendor:publish --tag=laravel-pagination
 
@@ -32,6 +33,7 @@ Route::middleware([
         return view('admin.dashboard');
     })->name('home');
     Route::get('/posts', [PostControllerPublic::class, 'index'])->name('posts.index');
+    Route::get('/posts/trash', [PostController::class, 'trashed'])->name('posts.trashed');
     Route::get('/posts/create', function () {
         return view('admin.post.post-create');
     })->name('posts.create');
@@ -39,6 +41,8 @@ Route::middleware([
     Route::get('/posts/edit/{post}', [PostController::class, 'edit'])->name('posts.edit');
     Route::post('/posts/update/{post}', [PostController::class, 'update'])->name('posts.update');
     Route::delete('/posts/delete/{post}', [PostController::class, 'destroy'])->name('posts.delete');
+    Route::delete('/posts/forcedelete/{post}', [PostController::class, 'forcedelete'])->name('posts.forcedelete');
+    Route::get('/posts/restore/{post}', [PostController::class, 'restore'])->name('posts.restore');
     Route::get('/post-categories', function () {
         return view('admin.dashboard');
     })->name('posts.categories.index');
@@ -52,3 +56,29 @@ Route::get('/logout', function () {
 
     return redirect('/');
 })->middleware('auth')->name('logout');
+
+
+
+Route::post('/ckeditor/upload', function (Request $request) {
+
+    if (!$request->user()->hasRole('admin')) {
+        abort(403);
+    }
+
+    $request->validate([
+        'upload' => 'required|image|mimes:jpg,jpeg,png,webp|max:2048'
+    ]);
+
+    $path = $request->file('upload')->store('ckeditor', 'public');
+
+    return response()->json([
+        'uploaded' => true,
+        'url' => asset('storage/' . $path),
+    ]);
+})->middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified',
+    'role:admin'
+])
+    ->name('ckeditor.upload');
