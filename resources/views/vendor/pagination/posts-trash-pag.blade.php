@@ -39,7 +39,7 @@
 
         {{-- Previous --}}
         <li class="page-item {{ $paginator->onFirstPage() ? 'disabled' : '' }}">
-            <a class="page-link" href="{{ $paginator->onFirstPage() ? '#' : url('admin/posts/page/' . ($paginator->currentPage() - 1)) }}">
+            <a class="page-link" href="{{ $paginator->onFirstPage() ? '#' : url('admin/posts/trash/page/' . ($paginator->currentPage() - 1)) }}">
                 <i class="fas fa-angle-left"></i>
             </a>
         </li>
@@ -49,7 +49,7 @@
         @if (is_array($element))
         @foreach ($element as $page => $url)
         <li class="page-item {{ $page == $paginator->currentPage() ? 'active' : '' }}">
-            <a class="page-link" href="{{ url('admin/posts/page/' . $page) }}">{{ $page }}</a>
+            <a class="page-link" href="{{ url('admin/posts/trash/page/' . $page) }}">{{ $page }}</a>
         </li>
         @endforeach
         @endif
@@ -57,7 +57,7 @@
 
         {{-- Next --}}
         <li class="page-item {{ $paginator->hasMorePages() ? '' : 'disabled' }}">
-            <a class="page-link" href="{{ $paginator->hasMorePages() ? url('admin/posts/page/' . ($paginator->currentPage() + 1)) : '#' }}">
+            <a class="page-link" href="{{ $paginator->hasMorePages() ? url('admin/posts/trash/page/' . ($paginator->currentPage() + 1)) : '#' }}">
                 <i class="fas fa-angle-right"></i>
             </a>
         </li>

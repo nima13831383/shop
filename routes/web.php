@@ -33,7 +33,11 @@ Route::middleware([
         return view('admin.dashboard');
     })->name('home');
     Route::get('/posts', [PostControllerPublic::class, 'index'])->name('posts.index');
+    Route::get('/posts/page/{page}', [PostControllerPublic::class, 'index'])
+        ->name('posts.page');
     Route::get('/posts/trash', [PostController::class, 'trashed'])->name('posts.trashed');
+    Route::get('/posts/trash/page/{page}', [PostController::class, 'trashed'])
+        ->name('posts.trashed.page');
     Route::get('/posts/create', function () {
         return view('admin.post.post-create');
     })->name('posts.create');

@@ -170,7 +170,7 @@
                 <!-- Content -->
                 <b></b>
                 <!-- Pagination -->
-                {{ $posts->links('vendor.pagination.bootstrap-5') }}
+                {{ $posts->links('vendor.pagination.posts-trash-pag') }}
             </div>
             <!-- Pagination END -->
         </div>

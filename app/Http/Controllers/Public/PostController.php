@@ -12,10 +12,10 @@ class PostController  extends Controller
      * Display a listing of the resource.
      */
 
-    public function index()
+    public function index($page = 1)
     {
-        $posts = Post::latest()->with(['author','categories']) // eager loading
-            ->paginate(10);
+        $posts = Post::latest()->with(['author', 'categories']) // eager loading
+            ->paginate(10, ['*'], 'page', $page);
         return view('admin.post.post-index', compact('posts'));
     }
     /**

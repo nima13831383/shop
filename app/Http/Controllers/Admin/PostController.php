@@ -15,16 +15,15 @@ use Illuminate\Support\Facades\Log;
 class PostController  extends Controller
 {
 
-    public function trashed()
+    public function trashed($page = 1)
     {
         $posts = Post::onlyTrashed() // فقط پست‌های Soft Deleted
             ->latest()
             ->with(['author', 'categories'])
-            ->paginate(10);
+            ->paginate(10, ['*'], 'page', $page);
 
         return view('admin.post.post-trash', compact('posts'));
     }
-
 
     public function index()
     {
