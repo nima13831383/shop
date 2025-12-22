@@ -69,11 +69,27 @@ Route::post('/ckeditor/upload', function (Request $request) {
         'upload' => 'required|image|mimes:jpg,jpeg,png,webp|max:2048'
     ]);
 
-    $path = $request->file('upload')->store('ckeditor', 'public');
+    // $path = $request->file('upload')->store('ckeditor', 'public');
+    if (!file_exists(public_path('posts/ckeditor'))) {
+        mkdir(public_path('posts/ckeditor'), 0755, true);
+    }
+    if ($request->hasFile('upload')) {
+        $file = $request->file('upload');
 
+        // مسیر مقصد داخل public
+        $destinationPath = public_path('posts/ckeditor'); // public/posts
+        // نام فایل (می‌تونی timestamp یا uniqid بذاری)
+        $filename = time() . '_' . $file->getClientOriginalName();
+
+        // انتقال فایل به مسیر مقصد
+        $file->move($destinationPath, $filename);
+
+        // مسیر برای ذخیره در دیتابیس (relatvie to public)
+        $path = 'posts/ckeditor/' . $filename;
+    }
     return response()->json([
         'uploaded' => true,
-        'url' => asset('storage/' . $path),
+        'url' => asset($path),
     ]);
 })->middleware([
     'auth:sanctum',

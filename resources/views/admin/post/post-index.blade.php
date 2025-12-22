@@ -109,7 +109,7 @@
                                 <div class="d-flex align-items-center position-relative">
                                     <!-- Image -->
                                     <div class="w-60px">
-                                        <img src="assets/images/courses/4by3/08.jpg" class="rounded" alt="">
+                                        <img src="{{ asset($post->image) }}" class="rounded" alt="">
                                     </div>
                                     <!-- Title -->
                                     <h6 class="table-responsive-title mb-0 ms-2">

@@ -53,9 +53,28 @@ class PostController  extends Controller
             $data['slug'] = Str::slug($data['title']);
             $data['user_id'] = Auth::id();
             $data['body'] = Purifier::clean($data['body']);
-            if ($request->hasFile('image')) {
-                $data['image'] = $request->file('image')->store('posts', 'public');
+            // if ($request->hasFile('image')) {
+            //     $data['image'] = $request->file('image')->store('posts', 'public');
+            // }
+            if (!file_exists(public_path('posts'))) {
+                mkdir(public_path('posts'), 0755, true);
             }
+            if ($request->hasFile('image')) {
+                $file = $request->file('image');
+
+                // مسیر مقصد داخل public
+                $destinationPath = public_path('posts'); // public/posts
+                // نام فایل (می‌تونی timestamp یا uniqid بذاری)
+                $filename = time() . '_' . $file->getClientOriginalName();
+
+                // انتقال فایل به مسیر مقصد
+                $file->move($destinationPath, $filename);
+
+                // مسیر برای ذخیره در دیتابیس (relatvie to public)
+                $data['image'] = 'posts/' . $filename;
+            }
+
+
 
             $post = Post::create($data);
             $post->categories()->sync($data['category_ids'] ?? []);
@@ -109,8 +128,25 @@ class PostController  extends Controller
             }
 
             // آپلود تصویر جدید
+            // if ($request->hasFile('image')) {
+            //     $data['image'] = $request->file('image')->store('posts', 'public');
+            // }
+            if (!file_exists(public_path('posts'))) {
+                mkdir(public_path('posts'), 0755, true);
+            }
             if ($request->hasFile('image')) {
-                $data['image'] = $request->file('image')->store('posts', 'public');
+                $file = $request->file('image');
+
+                // مسیر مقصد داخل public
+                $destinationPath = public_path('posts'); // public/posts
+                // نام فایل (می‌تونی timestamp یا uniqid بذاری)
+                $filename = time() . '_' . $file->getClientOriginalName();
+
+                // انتقال فایل به مسیر مقصد
+                $file->move($destinationPath, $filename);
+
+                // مسیر برای ذخیره در دیتابیس (relatvie to public)
+                $data['image'] = 'posts/' . $filename;
             }
 
             // آپدیت پست
