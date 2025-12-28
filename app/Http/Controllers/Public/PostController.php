@@ -14,22 +14,23 @@ class PostController  extends Controller
 
     public function index($page = 1)
     {
-        $posts = Post::latest()->with(['author', 'categories']) // eager loading
-            ->paginate(10, ['*'], 'page', $page);
-        return view('admin.post.post-index', compact('posts'));
+        $posts = Post::latest()->with(['author', 'categories'])->where('published',true) // eager loading
+            ->paginate(4, ['*'], 'page', $page);
+        return view('public.blog', compact('posts'));
     }
     /**
      * Display the specified resource.
      */
-    public function show(Post $post)
+    public function show($slug)
     {
-        $this->authorize('view', $post);
-
+        $post = Post::where('slug',$slug)->firstOrFail();
+        $this->authorize('viewAny', $post);
         abort_if(!$post->published, 404);
 
         // افزایش بازدید
         $post->increment('views');
 
-        return $post->load(['author', 'categories', 'reviews']);
+        $post = $post->load(['author', 'categories', 'reviews']);
+        return view('public.article', compact('post'));
     }
 }

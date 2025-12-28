@@ -25,10 +25,10 @@ class PostController  extends Controller
         return view('admin.post.post-trash', compact('posts'));
     }
 
-    public function index()
+    public function index($page = 1)
     {
         $posts = Post::latest()->with(['author', 'categories']) // eager loading
-            ->paginate(10);
+            ->paginate(4, ['*'], 'page', $page);
         return view('admin.post.post-index', compact('posts'));
     }
     // POST - فقط admin
@@ -94,7 +94,7 @@ class PostController  extends Controller
 
             return back()
                 ->withInput()
-                ->withErrors(['error' => 'خطا در ایجاد پست']);
+                ->withErrors(['error' => 'خطا در ایجاد پست'.$e]);
         }
     }
     public function edit(Post $post)
@@ -109,7 +109,6 @@ class PostController  extends Controller
             $this->authorize('update', $post);
 
             DB::beginTransaction();
-
             $data = $request->validate([
                 'title'            => 'sometimes|required|string|max:255',
                 'body'             => 'sometimes|required|string',
@@ -173,7 +172,7 @@ class PostController  extends Controller
 
             return back()
                 ->withInput()
-                ->withErrors(['error' => 'خطا در ویرایش پست']);
+                ->withErrors(['error' => 'خطا در ویرایش پست'.$e]);
         }
     }
 

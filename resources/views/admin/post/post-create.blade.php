@@ -161,14 +161,13 @@ Steps START -->
                                     <div class="mb-3">
                                         <label class="form-label">Body</label>
 
-                                        <textarea name="body" id="body" class="form-control" rows="10">
-                                        {{ old('body', $post->body ?? '') }}
-                                        </textarea>
+                                        <textarea name="body" id="body" class="form-control" rows="10">{{ old('body', $post->body ?? '') }}</textarea>
 
                                         @error('body')
                                         <div class="text-danger mt-1">{{ $message }}</div>
                                         @enderror
                                     </div>
+
 
 
                                     <!-- Step 1 button -->
@@ -248,25 +247,26 @@ Steps END -->
 <script src="{{ asset('assets/vendor/quill/js/quill.min.js') }}"></script>
 <script src="{{ asset('assets/vendor/stepper/js/bs-stepper.min.js') }}"></script>
 <script src="{{ asset('assets/js/functions.js') }}"></script>
+
 <script src="https://cdn.ckeditor.com/ckeditor5/41.3.1/classic/ckeditor.js"></script>
 
+
 <script>
+    let editorInstance;
+
     ClassicEditor
         .create(document.querySelector('#body'), {
-            language: 'fa',
-            toolbar: [
-                'heading', '|',
-                'bold', 'italic', 'underline', 'link',
-                'bulletedList', 'numberedList', '|',
-                'insertTable', 'imageUpload', 'blockQuote', '|',
-                'undo', 'redo'
-            ],
-            ckfinder: {
-                uploadUrl: '{{ route("ckeditor.upload") }}?_token={{ csrf_token() }}'
-            }
+            language: 'fa'
         })
-        .catch(error => {
-            console.error(error);
+        .then(editor => {
+            editorInstance = editor;
         });
+
+    document.querySelector('form').addEventListener('submit', function() {
+        document.querySelector('#body').value = editorInstance.getData();
+    });
 </script>
+
+
+
 @endsection

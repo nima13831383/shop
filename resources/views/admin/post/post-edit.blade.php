@@ -5,9 +5,12 @@
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendor/choices/css/choices.min.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendor/aos/aos.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendor/glightbox/css/glightbox.css') }}">
-<link rel="stylesheet" type="text/css" href="{{ asset('assets/vendor/quill/css/quill.snow.css') }}">
+<!-- <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendor/quill/css/quill.snow.css') }}"> -->
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendor/stepper/css/bs-stepper.min.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css') }}">
+<link href="https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css" rel="stylesheet"
+    type="text/css" />
+
 @endsection
 @section('main-content')
 <!-- =======================
@@ -89,8 +92,9 @@ Steps START -->
                 <div class="card-body">
                     <!-- Step content START -->
                     <div class="bs-stepper-content">
-                        <form action="{{ route('admin.posts.update',[$post->id]) }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('admin.posts.update',[$post->id]) }}" method="POST" enctype="multipart/form-data" id="postform">
                             @csrf
+
                             <!-- Step 1 content START -->
                             <div id="step-1" role="tabpanel" class="content fade" aria-labelledby="steppertrigger1">
                                 <!-- Title -->
@@ -152,23 +156,23 @@ Steps START -->
                                     </div>
 
 
-
-
-
+                                    <!-- Blade -->
+                                    <div id="froala-editor"  data-upload-video-url="{{ url('/upload/video') }}"  data-upload-url="{{ url('/upload/photo') }}" data-csrf="{{ csrf_token() }}">{!! old('body', $post->body ?? '') !!}</div>
+                                    <textarea name="body" id="body" hidden></textarea>
 
 
                                     <!-- Course description -->
-                                    <div class="mb-3">
+                                    <!-- <div class="mb-3">
                                         <label class="form-label">Body</label>
 
-                                        <textarea name="body" id="body" class="form-control" rows="10">
-                                        {{ old('body', $post->body ?? '') }}
+                                        <textarea name="body" id="body" class="form-control" rows="10" hidden>
+
                                         </textarea>
 
                                         @error('body')
                                         <div class="text-danger mt-1">{{ $message }}</div>
                                         @enderror
-                                    </div>
+                                    </div> -->
 
                                     <!-- Step 1 button -->
                                     <div class="d-flex justify-content-end mt-3">
@@ -244,28 +248,18 @@ Steps END -->
 <script src="{{ asset('assets/vendor/choices/js/choices.min.js') }}"></script>
 <script src="{{ asset('assets/vendor/aos/aos.js') }}"></script>
 <script src="{{ asset('assets/vendor/glightbox/js/glightbox.js') }}"></script>
-<script src="{{ asset('assets/vendor/quill/js/quill.min.js') }}"></script>
+<!-- <script src="{{ asset('assets/vendor/quill/js/quill.min.js') }}"></script> -->
 <script src="{{ asset('assets/vendor/stepper/js/bs-stepper.min.js') }}"></script>
 <script src="{{ asset('assets/js/functions.js') }}"></script>
-<script src="https://cdn.ckeditor.com/ckeditor5/41.3.1/classic/ckeditor.js"></script>
 
-<script>
-    ClassicEditor
-        .create(document.querySelector('#body'), {
-            language: 'fa',
-            toolbar: [
-                'heading', '|',
-                'bold', 'italic', 'underline', 'link',
-                'bulletedList', 'numberedList', '|',
-                'insertTable', 'imageUpload', 'blockQuote', '|',
-                'undo', 'redo'
-            ],
-            ckfinder: {
-                uploadUrl: '{{ route("ckeditor.upload") }}?_token={{ csrf_token() }}'
-            }
-        })
-        .catch(error => {
-            console.error(error);
-        });
-</script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/froala-editor@latest/js/froala_editor.pkgd.min.js"></script>
+<!-- <script>
+    new FroalaEditor("div#froala-editor");
+</script> -->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+<script src="{{ asset('assets/js/wiy.js') }}"></script>
+
 @endsection
