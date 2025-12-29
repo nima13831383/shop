@@ -113,7 +113,7 @@
                                     </div>
                                     <!-- Title -->
                                     <h6 class="table-responsive-title mb-0 ms-2">
-                                        <a href="#" class="stretched-link">{{ $post->id.'-' .$post->title }}</a>
+                                        <a href="{{ url('/blog/').'/'.$post->slug }}" class="stretched-link">{{ $post->id.'-' .$post->title }}</a>
                                     </h6>
                                 </div>
                             </td>

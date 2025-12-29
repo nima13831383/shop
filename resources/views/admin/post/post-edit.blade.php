@@ -10,7 +10,15 @@
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css') }}">
 <link href="https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css" rel="stylesheet"
     type="text/css" />
+<style>
+    .fr-toolbar .fr-command[data-cmd="videoShortcode"] i.fas {
+        color: #000 !important;
+    }
+    .fr-toolbar .fr-command[data-cmd="videoShortcode"] i.fas {
+    color: #000 !important;
+}
 
+</style>
 @endsection
 @section('main-content')
 <!-- =======================
@@ -157,7 +165,7 @@ Steps START -->
 
 
                                     <!-- Blade -->
-                                    <div id="froala-editor"  data-upload-video-url="{{ url('/upload/video') }}"  data-upload-url="{{ url('/upload/photo') }}" data-csrf="{{ csrf_token() }}">{!! old('body', $post->body ?? '') !!}</div>
+                                    <div id="froala-editor" data-upload-video-url="{{ url('/upload/video') }}" data-upload-url="{{ url('/upload/photo') }}" data-csrf="{{ csrf_token() }}">{!! old('body', $post->body ?? '') !!}</div>
                                     <textarea name="body" id="body" hidden></textarea>
 
 

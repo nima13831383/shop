@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e93578ddd35223dfb933b36b76fe6f63",
+    "content-hash": "585b023fe6e6c80bab4c9b216cda1126",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -6675,6 +6675,74 @@
                 "source": "https://github.com/tijsverkoyen/CssToInlineStyles/tree/v2.4.0"
             },
             "time": "2025-12-02T11:56:42+00:00"
+        },
+        {
+            "name": "vedmant/laravel-shortcodes",
+            "version": "1.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/vedmant/laravel-shortcodes.git",
+                "reference": "f2278797dfb376fc064f3d49fb0621e9e3c49fba"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/vedmant/laravel-shortcodes/zipball/f2278797dfb376fc064f3d49fb0621e9e3c49fba",
+                "reference": "f2278797dfb376fc064f3d49fb0621e9e3c49fba",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/contracts": ">=5.5.0",
+                "illuminate/support": ">=5.5.0",
+                "illuminate/view": ">=5.5.0",
+                "php": ">=7.0.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.2",
+                "orchestra/testbench": "^4",
+                "phpunit/phpunit": "9.*",
+                "sempro/phpunit-pretty-print": "^1.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "aliases": {
+                        "FeedReader": "Vedmant\\LaravelShortcodes\\Facades\\FeedReader"
+                    },
+                    "providers": [
+                        "Vedmant\\LaravelShortcodes\\LaravelShortcodesServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "files": [
+                    "src/helpers.php"
+                ],
+                "psr-4": {
+                    "Vedmant\\LaravelShortcodes\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Vedmant",
+                    "email": "vedmant@gmail.com",
+                    "homepage": "https://vedmant.com/laravel-shortcodes"
+                }
+            ],
+            "description": "Wordress like shortcodes for Laravel",
+            "homepage": "https://github.com/vedmant/laravel-shortcodes",
+            "keywords": [
+                "laravel",
+                "shortcodes"
+            ],
+            "support": {
+                "issues": "https://github.com/vedmant/laravel-shortcodes/issues",
+                "source": "https://github.com/vedmant/laravel-shortcodes/tree/1.1.2"
+            },
+            "time": "2023-01-14T23:46:57+00:00"
         },
         {
             "name": "vlucas/phpdotenv",

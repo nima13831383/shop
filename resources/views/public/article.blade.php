@@ -1,9 +1,10 @@
 @extends('public.layouts.master')
+@use('Vedmant\LaravelShortcodes\Facades\Shortcodes')
 @section('css')
 @parent
 
-<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_style.min.css"  />
-<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css"  />
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_style.min.css" />
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css" />
 
 @endsection
 @section('main-content')
@@ -125,7 +126,8 @@ Main Content START -->
 
                 <!-- Content START -->
                 <div class="row fr-view">
-                    {!! $post->body !!}
+                    {!! Shortcodes::render($post->body) !!}
+
                 </div>
                 <!-- Content END -->
 
@@ -250,4 +252,13 @@ Main Content START -->
 </section>
 <!-- =======================
 Main Content END -->
+@endsection
+
+
+@section('js')
+@pa
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+
+
+
 @endsection
