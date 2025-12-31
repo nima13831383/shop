@@ -5,7 +5,11 @@
 
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_style.min.css" />
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css" />
-
+<style>
+    .bg-overlay {
+        pointer-events: none;
+    }
+</style>
 @endsection
 @section('main-content')
 <!-- =======================
@@ -53,76 +57,7 @@ Main Content START -->
                 </div>
                 <!-- Title and Info END -->
 
-                <!-- Video START -->
-                <div class="row mt-4">
-                    <div class="col-xl-10 mx-auto">
-                        <!-- Card item START -->
-                        <div class="card overflow-hidden h-200px h-sm-300px h-lg-400px h-xl-500px rounded-3 text-center" style="background-image:url(assets/images/event/10.jpg); background-position: center left; background-size: cover;">
-                            <!-- Card Image overlay -->
-                            <div class="bg-overlay bg-dark opacity-4"></div>
-                            <div class="card-img-overlay d-flex align-items-center p-2 p-sm-4">
-                                <div class="w-100 my-auto">
-                                    <div class="row justify-content-center">
-                                        <!-- Video -->
-                                        <div class="col-12">
-                                            <a href="https://www.youtube.com/embed/tXHviS-4ygo" class="btn btn-lg text-danger btn-round btn-white-shadow stretched-link position-static mb-0" data-glightbox="" data-gallery="video-tour">
-                                                <i class="fas fa-play"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Card item END -->
-                    </div>
-                </div>
-                <!-- Video END -->
 
-                <!-- Quote and content START -->
-                <div class="row mt-4">
-                    <!-- Content -->
-                    <div class="col-12 mt-4 mt-lg-0">
-                        <p><span class="dropcap h6 mb-0 px-2">S</span> atisfied conveying a dependent contented he gentleman agreeable do be. Water timed folly right aware if oh truth. Imprudence attachment him for sympathize. Large above be to means. Dashwood does provide stronger is. <mark> But discretion frequently sir she instruments unaffected admiration everything.</mark> Meant balls it if up doubt small purse. Required his you put the outlived answered position. A pleasure exertion if believed provided to. All led out world this music while asked. Paid mind even sons does he door no. Attended overcame repeated it is perceived Marianne in. I think on style child of. Servants moreover in sensible it ye possible.</p>
-                        <!-- List -->
-                        <ul class="list-group list-group-borderless mb-3">
-                            <li class="list-group-item"><i class="fas fa-check-circle text-success me-2"></i>The copy warned the Little blind text</li>
-                            <li class="list-group-item d-flex"><i class="fas fa-check-circle text-success me-2 mt-1"></i>ThaT where it came from it would have been rewritten a thousand times and everything that was left from origin would be the world</li>
-                            <li class="list-group-item"><i class="fas fa-check-circle text-success me-2"></i>Return to its own, safe country</li>
-                        </ul>
-                        <p class="mb-0">Warrant private blushes removed an in equally totally if. Delivered dejection necessary objection do Mr prevailed. Mr feeling does chiefly cordial in do. Water timed folly right aware if oh truth. Imprudence attachment him for sympathize.</p>
-                    </div>
-
-                    <!-- Quote -->
-                    <div class="col-lg-10 col-xl-8 mx-auto mt-4">
-                        <div class="bg-light rounded-3 p-3 p-md-4">
-                            <!-- Content -->
-                            <q class="lead">Farther-related bed and passage comfort civilly. Fulfilled direction use continual set him propriety continued. Concluded boy perpetual old supposing. Dashwoods see frankness objection abilities.</q>
-                            <!-- Avatar -->
-                            <div class="d-flex align-items-center mt-3">
-                                <!-- Avatar image -->
-                                <div class="avatar avatar-md">
-                                    <img class="avatar-img rounded-circle" src="assets/images/avatar/07.jpg" alt="avatar">
-                                </div>
-                                <!-- Info -->
-                                <div class="ms-2">
-                                    <h6 class="mb-0"><a href="#">Louis Crawford</a></h6>
-                                    <p class="mb-0 small">Via Twitter</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Quote and content END -->
-
-                <!-- Image START -->
-                <div class="row g-4 mt-4">
-                    <div class="col-sm-6 col-md-4">
-                        <a href="assets/images/event/08.jpg" data-glightbox data-gallery="image-popup">
-                            <img src="{{ asset('assets/images/event/08.jpg') }}" class="rounded-3" alt="">
-                        </a>
-                    </div>
-                </div>
-                <!-- Image END -->
 
                 <!-- Content START -->
                 <div class="row fr-view">
@@ -256,9 +191,40 @@ Main Content END -->
 
 
 @section('js')
-@pa
+@parent
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+<script src="{{ asset('assets/js/articles/styler.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"></script>
 
+<!-- Plyr JS -->
+<script src="https://cdn.plyr.io/3.6.8/plyr.polyfilled.js"></script>
+
+<script>
+    const lightbox = GLightbox({
+        selector: '.glightbox',
+        autoplayVideos: true,
+        autofocusVideos: false,
+        plyr: {
+            css: 'https://cdn.plyr.io/3.6.8/plyr.css',
+            js: 'https://cdn.plyr.io/3.6.8/plyr.polyfilled.js',
+            config: {
+                ratio: '16:9',
+                muted: false,
+                hideControls: false,
+                youtube: {
+                    noCookie: true,
+                    rel: 0,
+                    showinfo: 0
+                },
+                vimeo: {
+                    byline: false,
+                    portrait: false,
+                    title: false
+                }
+            }
+        }
+    });
+</script>
 
 
 @endsection

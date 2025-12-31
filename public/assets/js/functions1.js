@@ -37,7 +37,9 @@ Table Of Content
 ====================== */
 
 "use strict";
+
 !(function () {
+
     (window.Element.prototype.removeClass = function () {
         let className =
                 arguments.length > 0 && void 0 !== arguments[0]
@@ -555,6 +557,8 @@ var e = {
             });
         }
     },
+
+
     // END: GLightbox
 
     // START: 10 Isotope
@@ -1159,11 +1163,15 @@ var e = {
             const playerVimeo = new Plyr("#player-vimeo", {});
             window.player = playerVimeo;
 
-            // HTML video
+            //HTML video
             const playerHtmlvideo = new Plyr("video", {
                 captions: { active: true },
             });
             window.player = playerHtmlvideo;
+
+            // const playerHtmlvideo = new Plyr("video:not(.gvideo-local)", {
+            //     captions: { active: true },
+            // });
 
             // HTML audio
             const playerHtmlaudio = new Plyr("audio", {

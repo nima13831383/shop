@@ -44,8 +44,16 @@
         rel="stylesheet"
         type="text/css"
         href="{{ asset('assets/vendor/overlay-scrollbar/css/overlayscrollbars.min.css') }}" />
-
+    <!-- <link
+        rel="stylesheet"
+        type="text/css"
+        href="{{ asset('assets/vendor/glightbox/css/glightbox.css') }}" /> -->
     <!-- Theme CSS -->
+    <!-- GLightbox CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" />
+
+    <!-- Plyr CSS -->
+    <link rel="stylesheet" href="https://cdn.plyr.io/3.6.8/plyr.css" />
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css') }}" />
     @show
     <style>
@@ -307,7 +315,7 @@ Footer END -->
 
     <!-- Vendors -->
     <script src="{{ asset('assets/vendor/tiny-slider/tiny-slider.js') }}"></script>
-    <script src="{{ asset('assets/vendor/glightbox/js/glightbox.js') }}"></script>
+    <!-- <script src="{{ asset('assets/vendor/glightbox/js/glightbox.js') }}"></script> -->
 
     <!-- Template Functions -->
     <script src="{{ asset('assets/js/functions.js') }}"></script>

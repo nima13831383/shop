@@ -24,6 +24,7 @@ class AppServiceProvider extends ServiceProvider
     {
         if (!request()->is('admin/*')) {
             Shortcodes::add('video', \App\Shortcodes\VideoShortcode::class);
+            Shortcodes::add('quote', \App\Shortcodes\Quote::class);
         }
     }
 }

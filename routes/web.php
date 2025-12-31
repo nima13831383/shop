@@ -178,3 +178,6 @@ Route::get('/blog', [PostControllerPublic::class, 'index'])->name('public.blog')
 Route::get('/blog/page/{page}', [PostControllerPublic::class, 'index'])
     ->name('public.blog.page');
 Route::get('/blog/{slug}', [PostControllerPublic::class, 'show'])->name('public.blog.article');
+Route::get('test',function(){
+    return view('test');
+});

@@ -10,15 +10,9 @@
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css') }}">
 <link href="https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css" rel="stylesheet"
     type="text/css" />
-<style>
-    .fr-toolbar .fr-command[data-cmd="videoShortcode"] i.fas {
-        color: #000 !important;
-    }
-    .fr-toolbar .fr-command[data-cmd="videoShortcode"] i.fas {
-    color: #000 !important;
-}
+<link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
-</style>
 @endsection
 @section('main-content')
 <!-- =======================
@@ -268,6 +262,6 @@ Steps END -->
     new FroalaEditor("div#froala-editor");
 </script> -->
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
-<script src="{{ asset('assets/js/wiy.js') }}"></script>
+<script src="{{ asset('assets/js/articles/flora-editor-buttons.js') }}"></script>
 
 @endsection
