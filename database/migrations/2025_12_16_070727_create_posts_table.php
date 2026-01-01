@@ -12,10 +12,13 @@ return new class extends Migration {
 
             $table->string('title');
             $table->string('slug')->unique();
+            $table->text('description');
             $table->text('body');
             // تصویر شاخص پست
             $table->string('image')->nullable();
             $table->unsignedBigInteger('views')->default(0);
+            $table->unsignedBigInteger('likes')->default(0);
+            $table->integer('ttr')->default(0);
             // وضعیت انتشار
             $table->boolean('published')->default(false);
             $table->text('meta_keywords')->nullable();

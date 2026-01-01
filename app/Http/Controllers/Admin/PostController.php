@@ -41,6 +41,8 @@ class PostController  extends Controller
             $data = $request->validate([
                 'title'            => 'required|string|max:255',
                 'body'             => 'required|string',
+                'description'             => 'required|string',
+                'ttr' => 'integer',
                 'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
                 'published'        => 'boolean',
                 'meta_keywords'    => 'nullable|string|max:255',
@@ -51,7 +53,7 @@ class PostController  extends Controller
 
             $data['slug'] = Str::slug($data['title']);
             $data['user_id'] = Auth::id();
-            $data['body'] = Purifier::clean($data['body']);
+            //$data['body'] = Purifier::clean($data['body']);
             // if ($request->hasFile('image')) {
             //     $data['image'] = $request->file('image')->store('posts', 'public');
             // }
@@ -94,7 +96,7 @@ class PostController  extends Controller
 
             return back()
                 ->withInput()
-                ->withErrors(['error' => 'خطا در ایجاد پست'.$e]);
+                ->withErrors(['error' => 'خطا در ایجاد پست' . $e]);
         }
     }
     public function edit(Post $post)
@@ -124,6 +126,7 @@ class PostController  extends Controller
             if (isset($data['title'])) {
                 $data['slug'] = Str::slug($data['title']);
             }
+            // $data['body'] = Purifier::clean($data['body']);
 
             // آپلود تصویر جدید
             // if ($request->hasFile('image')) {
@@ -172,7 +175,7 @@ class PostController  extends Controller
 
             return back()
                 ->withInput()
-                ->withErrors(['error' => 'خطا در ویرایش پست'.$e]);
+                ->withErrors(['error' => 'خطا در ویرایش پست' . $e]);
         }
     }
 

@@ -113,10 +113,11 @@ Steps START -->
                                     </div>
 
                                     <!-- Short description -->
-                                    <!-- <div class="col-12">
+                                    <div class="col-12">
                                         <label class="form-label">Short description</label>
-                                        <textarea class="form-control" rows="2" placeholder="Enter keywords" name="body">{{ $post->body }}</textarea>
-                                    </div> -->
+                                        <textarea class="form-control" rows="2" placeholder="Enter keywords" name="description" id="description">{!! old('description', $post->description ?? '') !!}
+										</textarea>
+                                    </div>
 
                                     <!-- Course category -->
                                     <div class="col-md-6">
@@ -154,7 +155,7 @@ Steps START -->
                                     <!-- Post time to read -->
                                     <div class="col-md-6">
                                         <label class="form-label">time to read</label>
-                                        <input class="form-control" type="text" placeholder="Enter course time">
+                                        <input class="form-control" type="text" placeholder="Enter course time" name="ttr" id="ttr" value=" {!! old('ttr', $post->ttr ?? '') !!}">
                                     </div>
 
 
@@ -163,18 +164,7 @@ Steps START -->
                                     <textarea name="body" id="body" hidden></textarea>
 
 
-                                    <!-- Course description -->
-                                    <!-- <div class="mb-3">
-                                        <label class="form-label">Body</label>
 
-                                        <textarea name="body" id="body" class="form-control" rows="10" hidden>
-
-                                        </textarea>
-
-                                        @error('body')
-                                        <div class="text-danger mt-1">{{ $message }}</div>
-                                        @enderror
-                                    </div> -->
 
                                     <!-- Step 1 button -->
                                     <div class="d-flex justify-content-end mt-3">

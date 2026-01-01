@@ -5,9 +5,14 @@
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendor/choices/css/choices.min.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendor/aos/aos.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendor/glightbox/css/glightbox.css') }}">
-<link rel="stylesheet" type="text/css" href="{{ asset('assets/vendor/quill/css/quill.snow.css') }}">
+<!-- <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendor/quill/css/quill.snow.css') }}"> -->
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendor/stepper/css/bs-stepper.min.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css') }}">
+<link href="https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css" rel="stylesheet"
+    type="text/css" />
+<link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
 @endsection
 @section('main-content')
 <!-- =======================
@@ -89,7 +94,7 @@ Steps START -->
                 <div class="card-body">
                     <!-- Step content START -->
                     <div class="bs-stepper-content">
-                        <form action="{{ route('admin.posts.store') }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('admin.posts.store') }}" method="POST" enctype="multipart/form-data" id="postform">
                             @csrf
                             <!-- Step 1 content START -->
                             <div id="step-1" role="tabpanel" class="content fade" aria-labelledby="steppertrigger1">
@@ -107,10 +112,12 @@ Steps START -->
                                     </div>
 
                                     <!-- Short description -->
-                                    <!-- <div class="col-12">
+                                    <div class="col-12">
                                         <label class="form-label">Short description</label>
-                                        <textarea class="form-control" rows="2" placeholder="Enter keywords" name="body">{{ old('body') }}</textarea>
-                                    </div> -->
+                                        <textarea class="form-control" rows="2" placeholder="Enter keywords" name="description" id="description">{!! old('description', $post->description ?? '') !!}
+										</textarea>
+                                    </div>
+
 
                                     <!-- Course category -->
                                     <div class="col-md-6">
@@ -148,7 +155,7 @@ Steps START -->
                                     <!-- Post time to read -->
                                     <div class="col-md-6">
                                         <label class="form-label">time to read</label>
-                                        <input class="form-control" type="text" placeholder="Enter course time">
+                                        <input class="form-control" type="text" placeholder="Enter course time" name="ttr" id="ttr" value=" {!! old('ttr', $post->ttr ?? '') !!}">
                                     </div>
 
 
@@ -157,16 +164,9 @@ Steps START -->
 
 
 
-                                    <!-- Course description -->
-                                    <div class="mb-3">
-                                        <label class="form-label">Body</label>
-
-                                        <textarea name="body" id="body" class="form-control" rows="10">{{ old('body', $post->body ?? '') }}</textarea>
-
-                                        @error('body')
-                                        <div class="text-danger mt-1">{{ $message }}</div>
-                                        @enderror
-                                    </div>
+                                    <!-- Blade -->
+                                    <div id="froala-editor" data-upload-video-url="{{ url('/upload/video') }}" data-upload-url="{{ url('/upload/photo') }}" data-csrf="{{ csrf_token() }}">{!! old('body', $post->body ?? '') !!}</div>
+                                    <textarea name="body" id="body" hidden></textarea>
 
 
 
@@ -244,29 +244,18 @@ Steps END -->
 <script src="{{ asset('assets/vendor/choices/js/choices.min.js') }}"></script>
 <script src="{{ asset('assets/vendor/aos/aos.js') }}"></script>
 <script src="{{ asset('assets/vendor/glightbox/js/glightbox.js') }}"></script>
-<script src="{{ asset('assets/vendor/quill/js/quill.min.js') }}"></script>
+<!-- <script src="{{ asset('assets/vendor/quill/js/quill.min.js') }}"></script> -->
 <script src="{{ asset('assets/vendor/stepper/js/bs-stepper.min.js') }}"></script>
 <script src="{{ asset('assets/js/functions.js') }}"></script>
 
-<script src="https://cdn.ckeditor.com/ckeditor5/41.3.1/classic/ckeditor.js"></script>
 
 
-<script>
-    let editorInstance;
 
-    ClassicEditor
-        .create(document.querySelector('#body'), {
-            language: 'fa'
-        })
-        .then(editor => {
-            editorInstance = editor;
-        });
-
-    document.querySelector('form').addEventListener('submit', function() {
-        document.querySelector('#body').value = editorInstance.getData();
-    });
-</script>
-
-
+<script src="https://cdn.jsdelivr.net/npm/froala-editor@latest/js/froala_editor.pkgd.min.js"></script>
+<!-- <script>
+    new FroalaEditor("div#froala-editor");
+</script> -->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+<script src="{{ asset('assets/js/articles/flora-editor-buttons.js') }}"></script>
 
 @endsection
