@@ -59,12 +59,11 @@ return [
             'throw' => false,
             'report' => false,
         ],
-        'media' => [
+        'media_public' => [
             'driver' => 'local',
-            'root' => public_path('media'),  // مسیر مستقیم در public
-            'url' => env('APP_URL') . '/media',  // لینک مستقیم
+            'root' => public_path('media'),
+            'url' => env('APP_URL') . '/media',
             'visibility' => 'public',
-            'throw' => false,
         ],
 
 

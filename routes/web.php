@@ -7,6 +7,7 @@ use \Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
+use App\Http\Controllers\Admin\MediaController;
 
 // php artisan vendor:publish --tag=laravel-pagination
 
@@ -178,6 +179,10 @@ Route::get('/blog', [PostControllerPublic::class, 'index'])->name('public.blog')
 Route::get('/blog/page/{page}', [PostControllerPublic::class, 'index'])
     ->name('public.blog.page');
 Route::get('/blog/{slug}', [PostControllerPublic::class, 'show'])->name('public.blog.article');
-Route::get('test',function(){
+Route::get('test', function () {
     return view('test');
 });
+Route::get('/media/upload', fn() => view('admin.media.upload'));
+Route::post('/media/upload', [MediaController::class, 'store'])->name('media.store');
+Route::delete('/media/{media}', [MediaController::class, 'destroy'])->name('media.delete');
+Route::get('/media/index', [MediaController::class, 'index'])->name('media.index');

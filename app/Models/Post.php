@@ -6,9 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Carbon\Carbon;
 
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class Post extends Model
+class Post extends Model implements HasMedia
 {
+    use InteractsWithMedia;
+
     use SoftDeletes;
     protected $fillable = [
         'title',
@@ -74,5 +78,12 @@ class Post extends Model
         }
 
         return $date->format('M d, Y');
+    }
+
+    public function registerMediaCollections(): void
+    {
+        $this
+            ->addMediaCollection('images')
+            ->acceptsMimeTypes(['image/jpeg', 'image/png']);
     }
 }
