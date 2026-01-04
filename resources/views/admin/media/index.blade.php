@@ -1,13 +1,9 @@
-<!DOCTYPE html>
-<html>
 
-<head>
-    <title>Media Library</title>
-</head>
+@extends('admin.layouts.master')
 
-<body>
-
-    <h1>Media Library</h1>
+@section('main-content')
+<div class="page-content-wrapper border">
+        <h1>Media Library</h1>
 
     @if(session('success'))
     <p style="color:green">{{ session('success') }}</p>
@@ -25,7 +21,7 @@
         <p>Name: {{ $media->name }}</p>
         <p>File: <input type="text" value="{{ $media->getFullUrl() }}" readonly style="width:100%"></p>
 
-        <form method="POST" action="{{ route('media.delete', $media->id) }}">
+        <form method="POST" action="{{ route('admin.media.delete', $media->id) }}">
             @csrf
             @method('DELETE')
             <button type="submit" onclick="return confirm('Are you sure?')">Delete</button>
@@ -33,7 +29,5 @@
     </div>
     @endforeach
     @endforeach
-
-</body>
-
-</html>
+</div>
+@endsection

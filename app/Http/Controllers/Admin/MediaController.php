@@ -6,9 +6,19 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use App\Models\MediaItem;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class MediaController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            if (!$request->user()->hasRole('admin')) {
+                abort(403);
+            } // ✅ اینجا کار می‌کنه
+            return $next($request);
+        });
+    }
     public function index()
     {
         $items = MediaItem::with('media')->latest()->get();

@@ -1,15 +1,21 @@
-<form action="{{ route('media.store') }}" method="POST" enctype="multipart/form-data">
-    @csrf
+@extends('admin.layouts.master')
 
-    <input type="text" name="title" placeholder="عنوان (اختیاری)">
+@section('main-content')
+<div class="page-content-wrapper border">
+    <form action="{{ route('admin.media.store') }}" method="POST" enctype="multipart/form-data">
+        @csrf
 
-    <select name="collection">
-        <option value="images">تصویر</option>
-        <option value="videos">ویدیو</option>
-        <option value="files">فایل</option>
-    </select>
+        <input type="text" name="title" placeholder="عنوان (اختیاری)">
 
-    <input type="file" name="file" required>
+        <select name="collection">
+            <option value="images">تصویر</option>
+            <option value="videos">ویدیو</option>
+            <option value="files">فایل</option>
+        </select>
 
-    <button type="submit">آپلود</button>
-</form>
+        <input type="file" name="file" required>
+
+        <button type="submit">آپلود</button>
+    </form>
+</div>
+@endsection

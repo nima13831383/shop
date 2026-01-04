@@ -53,6 +53,11 @@ Route::middleware([
     Route::get('/post-categories', function () {
         return view('admin.dashboard');
     })->name('posts.categories.index');
+
+    Route::get('/media/upload', fn() => view('admin.media.upload'))->name('media.upload');
+    Route::post('/media/upload', [MediaController::class, 'store'])->name('media.store');
+    Route::delete('/media/{media}', [MediaController::class, 'destroy'])->name('media.delete');
+    Route::get('/media/index', [MediaController::class, 'index'])->name('media.index');
 });
 
 Route::get('/logout', function () {
@@ -66,45 +71,45 @@ Route::get('/logout', function () {
 
 
 
-Route::post('/ckeditor/upload', function (Request $request) {
+// Route::post('/ckeditor/upload', function (Request $request) {
 
-    if (!$request->user()->hasRole('admin')) {
-        abort(403);
-    }
+//     if (!$request->user()->hasRole('admin')) {
+//         abort(403);
+//     }
 
-    $request->validate([
-        'upload' => 'required|image|mimes:jpg,jpeg,png,webp|max:2048'
-    ]);
+//     $request->validate([
+//         'upload' => 'required|image|mimes:jpg,jpeg,png,webp|max:2048'
+//     ]);
 
-    // $path = $request->file('upload')->store('ckeditor', 'public');
-    if (!file_exists(public_path('posts/ckeditor'))) {
-        mkdir(public_path('posts/ckeditor'), 0755, true);
-    }
-    if ($request->hasFile('upload')) {
-        $file = $request->file('upload');
+//     // $path = $request->file('upload')->store('ckeditor', 'public');
+//     if (!file_exists(public_path('posts/ckeditor'))) {
+//         mkdir(public_path('posts/ckeditor'), 0755, true);
+//     }
+//     if ($request->hasFile('upload')) {
+//         $file = $request->file('upload');
 
-        // مسیر مقصد داخل public
-        $destinationPath = public_path('posts/ckeditor'); // public/posts
-        // نام فایل (می‌تونی timestamp یا uniqid بذاری)
-        $filename = time() . '_' . $file->getClientOriginalName();
+//         // مسیر مقصد داخل public
+//         $destinationPath = public_path('posts/ckeditor'); // public/posts
+//         // نام فایل (می‌تونی timestamp یا uniqid بذاری)
+//         $filename = time() . '_' . $file->getClientOriginalName();
 
-        // انتقال فایل به مسیر مقصد
-        $file->move($destinationPath, $filename);
+//         // انتقال فایل به مسیر مقصد
+//         $file->move($destinationPath, $filename);
 
-        // مسیر برای ذخیره در دیتابیس (relatvie to public)
-        $path = 'posts/ckeditor/' . $filename;
-    }
-    return response()->json([
-        'uploaded' => true,
-        'url' => asset($path),
-    ]);
-})->middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified',
-    'role:admin'
-])
-    ->name('ckeditor.upload');
+//         // مسیر برای ذخیره در دیتابیس (relatvie to public)
+//         $path = 'posts/ckeditor/' . $filename;
+//     }
+//     return response()->json([
+//         'uploaded' => true,
+//         'url' => asset($path),
+//     ]);
+// })->middleware([
+//     'auth:sanctum',
+//     config('jetstream.auth_session'),
+//     'verified',
+//     'role:admin'
+// ])
+//     ->name('ckeditor.upload');
 
 
 Route::post('/upload/photo', function (Request $request) {
@@ -182,7 +187,3 @@ Route::get('/blog/{slug}', [PostControllerPublic::class, 'show'])->name('public.
 Route::get('test', function () {
     return view('test');
 });
-Route::get('/media/upload', fn() => view('admin.media.upload'));
-Route::post('/media/upload', [MediaController::class, 'store'])->name('media.store');
-Route::delete('/media/{media}', [MediaController::class, 'destroy'])->name('media.delete');
-Route::get('/media/index', [MediaController::class, 'index'])->name('media.index');

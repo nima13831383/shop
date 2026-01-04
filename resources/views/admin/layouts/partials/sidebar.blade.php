@@ -58,6 +58,33 @@
                     </ul>
                 </li>
 
+                <!-- menu item 2 -->
+                <li class="nav-item">
+                    <a
+                        class="nav-link"
+                        data-bs-toggle="collapse"
+                        href="#collapsepage1"
+                        role="button"
+                        aria-expanded="false"
+                        aria-controls="collapsepage1">
+                        <i class="bi bi-folder2-open fa-fw me-2"></i>
+                        media library
+                    </a>
+                    <!-- Submenu -->
+                    <ul
+                        class="nav collapse flex-column"
+                        id="collapsepage1"
+                        data-bs-parent="#navbar-sidebar">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('admin.media.index') }}">All media</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('admin.media.upload') }}">Add media</a>
+                        </li>
+
+                    </ul>
+                </li>
+
                 <!-- Menu item 3 -->
                 <li class="nav-item">
                     <a class="nav-link" href="admin-student-list.html"><i class="fas fa-user-graduate fa-fw me-2"></i>Students</a>
