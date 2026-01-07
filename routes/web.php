@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use App\Http\Controllers\Admin\MediaController;
-
+use App\Models\MediaItem;
 // php artisan vendor:publish --tag=laravel-pagination
 
 Route::get('/', function () {
@@ -58,6 +58,78 @@ Route::middleware([
     Route::post('/media/upload', [MediaController::class, 'store'])->name('media.store');
     Route::delete('/media/{media}', [MediaController::class, 'destroy'])->name('media.delete');
     Route::get('/media/index', [MediaController::class, 'index'])->name('media.index');
+    Route::post('/upload/photo', function (Request $request) {
+
+        $user = $request->user();
+
+        if (!$user || !$user->hasRole('admin')) {
+            abort(403);
+        }
+
+        $request->validate([
+            'file' => 'required|image|mimes:jpg,jpeg,png,webp|max:2048',
+        ]);
+
+        // یک MediaItem برای نگه‌داری مدیا
+        $item = MediaItem::firstOrCreate([
+            'title' => 'froala-uploads'
+        ]);
+
+        $media = $item
+            ->addMedia($request->file('file'))
+            ->usingName(
+                pathinfo($request->file('file')->getClientOriginalName(), PATHINFO_FILENAME)
+            )
+            ->usingFileName(
+                time() . '_' . $request->file('file')->getClientOriginalName()
+            )
+            ->toMediaCollection('images'); // کالکشن مخصوص Froala
+
+        return response()->json([
+            'link' => $media->getFullUrl(), // چیزی که Froala می‌خواد
+        ]);
+    })->middleware([
+        'auth:sanctum',
+        config('jetstream.auth_session'),
+        'verified',
+        'role:admin',
+    ])->name('upload.photo');
+
+    Route::post('/upload/video', function (Request $request) {
+        $user = $request->user();
+
+        if (!$user || !$user->hasRole('admin')) {
+            abort(403);
+        }
+
+        $request->validate([
+            'file' => 'required|mimetypes:video/mp4,video/webm,video/ogg|max:51200', // 50MB
+        ]);
+
+        // یک MediaItem برای نگه‌داری مدیا
+        $item = MediaItem::firstOrCreate([
+            'title' => 'froala-uploads'
+        ]);
+
+        $media = $item
+            ->addMedia($request->file('file'))
+            ->usingName(
+                pathinfo($request->file('file')->getClientOriginalName(), PATHINFO_FILENAME)
+            )
+            ->usingFileName(
+                time() . '_' . $request->file('file')->getClientOriginalName()
+            )
+            ->toMediaCollection('videos'); // کالکشن مخصوص Froala
+
+        return response()->json([
+            'link' => $media->getFullUrl(), // چیزی که Froala می‌خواد
+        ]);
+    })->middleware([
+        'auth:sanctum',
+        config('jetstream.auth_session'),
+        'verified',
+        'role:admin'
+    ])->name('upload.video');
 });
 
 Route::get('/logout', function () {
@@ -112,70 +184,6 @@ Route::get('/logout', function () {
 //     ->name('ckeditor.upload');
 
 
-Route::post('/upload/photo', function (Request $request) {
-
-    $user = $request->user();
-
-    if (!$user || !$user->hasRole('admin')) {
-        abort(403);
-    }
-
-    $request->validate([
-        'file' => 'required|image|mimes:jpg,jpeg,png,webp|max:2048'
-    ]);
-
-    // مسیر مقصد داخل public
-    $destinationPath = public_path('posts/froala');
-    if (!File::exists($destinationPath)) {
-        File::makeDirectory($destinationPath, 0755, true);
-    }
-
-    if ($request->hasFile('file')) {
-        $file = $request->file('file');
-        $filename = time() . '_' . $file->getClientOriginalName();
-        $file->move($destinationPath, $filename);
-
-        $path = 'posts/froala/' . $filename;
-
-        return response()->json([
-            "link" => asset($path)  // Froala انتظار داره این کلید وجود داشته باشه
-        ]);
-    }
-
-    return response()->json(['error' => 'No file uploaded'], 400);
-})
-    ->middleware([
-        'auth:sanctum',
-        config('jetstream.auth_session'),
-        'verified',
-        'role:admin'
-    ])
-    ->name('upload.photo');
-
-Route::post('/upload/video', function (Request $request) {
-    $user = $request->user();
-
-    if (!$user || !$user->hasRole('admin')) {
-        abort(403);
-    }
-
-    $request->validate([
-        'file' => 'required|mimetypes:video/mp4,video/webm,video/ogg|max:51200', // 50MB
-    ]);
-
-    $file = $request->file('file');
-    $filename = time() . '_' . $file->getClientOriginalName();
-    $file->move(public_path('posts/videos'), $filename);
-
-    return response()->json([
-        'link' => asset('posts/videos/' . $filename)
-    ]);
-})->middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified',
-    'role:admin'
-])->name('upload.video');
 
 
 //public routes

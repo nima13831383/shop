@@ -42,7 +42,7 @@ class PostController  extends Controller
                 'title'            => 'required|string|max:255',
                 'body'             => 'required|string',
                 'description'             => 'required|string',
-                'ttr' => 'integer',
+                'ttr' => 'nullable|integer',
                 'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
                 'published'        => 'boolean',
                 'meta_keywords'    => 'nullable|string|max:255',
@@ -50,7 +50,7 @@ class PostController  extends Controller
                 'category_ids'     => 'nullable|array',
                 'category_ids.*'   => 'exists:post_categories,id',
             ]);
-
+            $data['ttr'] = $data['ttr'] ?? 0;
             $data['slug'] = Str::slug($data['title']);
             $data['user_id'] = Auth::id();
             //$data['body'] = Purifier::clean($data['body']);

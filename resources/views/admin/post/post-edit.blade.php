@@ -160,7 +160,7 @@ Steps START -->
 
 
                                     <!-- Blade -->
-                                    <div id="froala-editor" data-upload-video-url="{{ url('/upload/video') }}" data-upload-url="{{ url('/upload/photo') }}" data-csrf="{{ csrf_token() }}">{!! old('body', $post->body ?? '') !!}</div>
+                                    <div id="froala-editor" data-upload-video-url="{{ url('admin/upload/video') }}" data-upload-url="{{ url('admin/upload/photo') }}" data-csrf="{{ csrf_token() }}">{!! old('body', $post->body ?? '') !!}</div>
                                     <textarea name="body" id="body" hidden></textarea>
 
 
@@ -187,16 +187,31 @@ Steps START -->
                                     <div class="col-12">
                                         <div class="text-center justify-content-center align-items-center p-4 p-sm-5 border border-2 border-dashed position-relative rounded-3">
                                             <!-- Image -->
-                                            <img src="assets/images/element/gallery.svg" class="h-50px" alt="">
+                                            @if(!empty($post->image))
+                                            <img src="{{ asset($post->image) }}" class="h-50px mb-2" alt="">
+                                            @endif
+
                                             <div>
-                                                <h6 class="my-2">Upload Post thumbnail here, or<a href="#!" class="text-primary"> Browse</a></h6>
+                                                <h6 class="my-2">
+                                                    Upload Post thumbnail here, or
+                                                    <a href="#!" class="text-primary">Browse</a>
+                                                </h6>
+
                                                 <label style="cursor:pointer;">
-                                                    <span>
-                                                        <input class="form-control stretched-link" type="file" name="image" id="image" accept="image/gif, image/jpeg, image/png" />
-                                                    </span>
+                                                    <input
+                                                        class="form-control stretched-link"
+                                                        type="file"
+                                                        name="image"
+                                                        id="image"
+                                                        accept="image/jpeg,image/png,image/jpg,image/gif">
                                                 </label>
-                                                <p class="small mb-0 mt-2"><b>Note:</b> Only JPG, JPEG and PNG. Our suggested dimensions are 600px * 450px. Larger image will be cropped to 4:3 to fit our thumbnails/previews.</p>
+
+                                                <p class="small mb-0 mt-2">
+                                                    <b>Note:</b> Only JPG, JPEG and PNG.
+                                                    Suggested size: 600×450 (4:3)
+                                                </p>
                                             </div>
+
                                         </div>
 
                                         <!-- Button -->

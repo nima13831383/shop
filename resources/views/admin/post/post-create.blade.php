@@ -165,7 +165,7 @@ Steps START -->
 
 
                                     <!-- Blade -->
-                                    <div id="froala-editor" data-upload-video-url="{{ url('/upload/video') }}" data-upload-url="{{ url('/upload/photo') }}" data-csrf="{{ csrf_token() }}">{!! old('body', $post->body ?? '') !!}</div>
+                                    <div id="froala-editor" data-upload-video-url="{{ url('admin/upload/video') }}" data-upload-url="{{ url('admin/upload/photo') }}" data-csrf="{{ csrf_token() }}">{!! old('body', $post->body ?? '') !!}</div>
                                     <textarea name="body" id="body" hidden></textarea>
 
 

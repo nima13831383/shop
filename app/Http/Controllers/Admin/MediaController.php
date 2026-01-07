@@ -32,14 +32,26 @@ class MediaController extends Controller
             'collection' => 'required',
         ]);
 
-        $item = MediaItem::create([
-            'title' => $request->title,
-        ]);
+        // $item = MediaItem::create([
+        //     'title' => $request->title,
+        // ]);
+        $item = MediaItem::firstOrCreate(
+            ['id' => 1],
+            ['title' => 'all']
+        );
+
 
         $item
             ->addMedia($request->file('file'))
-            ->usingFileName(time() . '_' . $request->file('file')->getClientOriginalName())
+            ->usingName(
+                $request->title
+                    ?? pathinfo($request->file('file')->getClientOriginalName(), PATHINFO_FILENAME)
+            )
+            ->usingFileName(
+                time() . '_' . $request->file('file')->getClientOriginalName()
+            )
             ->toMediaCollection($request->collection);
+
 
         return back()->with('success', 'آپلود شد');
     }
