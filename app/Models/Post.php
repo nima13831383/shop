@@ -43,7 +43,16 @@ class Post extends Model implements HasMedia
     /* reviews */
     public function reviews()
     {
-        return $this->hasMany(PostReview::class);
+        return $this->hasMany(PostReview::class)
+            ->whereNull('parent_id')
+            ->where('status', 'approved')
+            ->with('children');
+    }
+    public function getReviewsCountAttribute()
+    {
+        return $this->hasMany(PostReview::class)
+            ->where('status', 'approved')
+            ->count();
     }
 
 

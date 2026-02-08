@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2ba309faf4032ad9dc9b238ffcbce5ef",
+    "content-hash": "d892028692b4288c8f621cbab4d66440",
     "packages": [
         {
             "name": "anourvalar/eloquent-serialize",
@@ -1861,7 +1861,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/b51ac707cfa420b7bfd4e4d5e510ba8008e822b4",
+                "url": "https://mirror-composer.runflare.com/repos/guzzle/guzzle/zipball/b51ac707cfa420b7bfd4e4d5e510ba8008e822b4",
                 "reference": "b51ac707cfa420b7bfd4e4d5e510ba8008e822b4",
                 "shasum": ""
             },
@@ -1904,7 +1904,7 @@
                     "GuzzleHttp\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "notification-url": "https://mirror-composer.runflare.com/downloads/",
             "license": [
                 "MIT"
             ],

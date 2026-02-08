@@ -97,56 +97,15 @@ Main Content START -->
                 <div class="row mt-4">
                     <!-- Comment START -->
                     <div class="col-md-7">
-                        <h3>3 comments</h3>
-                        <!-- Comment level 1-->
-                        <div class="my-4 d-flex">
-                            <img class="avatar avatar-md rounded-circle me-3" src="assets/images/avatar/01.jpg" alt="avatar">
-                            <div>
-                                <div class="mb-2">
-                                    <h5 class="m-0">Frances Guerrero</h5>
-                                    <span class="me-3 small">June 11, 2021 at 6:01 am</span>
-                                </div>
-                                <p>Satisfied conveying a dependent contented he gentleman agreeable do be. Warrant private blushes removed an in equally totally if. Delivered dejection necessary objection do Mr prevailed. Mr feeling does chiefly cordial in do.</p>
-                                <a href="#" class="btn btn-sm btn-light mb-0">Reply</a>
-                            </div>
-                        </div>
-                        <!-- Comment children level 2 -->
-                        <div class="my-4 d-flex ps-2 ps-md-4">
-                            <img class="avatar avatar-md rounded-circle me-3" src="assets/images/avatar/02.jpg" alt="avatar">
-                            <div>
-                                <div class="mb-2">
-                                    <h5 class="m-0">Louis Ferguson</h5>
-                                    <span class="me-3 small">June 11, 2021 at 6:55 am</span>
-                                </div>
-                                <p>Water timed folly right aware if oh truth. Imprudence attachment him for sympathize. Large above be to means. Dashwood does provide stronger is. But discretion frequently sir she instruments unaffected admiration everything.</p>
-                                <a href="#" class="btn btn-sm btn-light mb-0">Reply</a>
-                            </div>
-                        </div>
-                        <!-- Comment children level 3 -->
-                        <div class="my-4 d-flex ps-3 ps-md-5">
-                            <img class="avatar avatar-md rounded-circle me-3" src="assets/images/avatar/01.jpg" alt="avatar">
-                            <div>
-                                <div class="mb-2">
-                                    <h5 class="m-0">Frances Guerrero</h5>
-                                    <span class="me-3 small">June 12, 2021 at 7:30 am</span>
-                                </div>
-                                <p>Water timed folly right aware if oh truth.</p>
-                                <a href="#" class="btn btn-sm btn-light mb-0">Reply</a>
-                            </div>
-                        </div>
-                        <!-- Comment level 1 -->
-                        <div class="my-4 d-flex">
-                            <img class="avatar avatar-md rounded-circle me-3" src="assets/images/avatar/04.jpg" alt="avatar">
-                            <div>
-                                <div class="mb-2">
-                                    <h5 class="m-0">Judy Nguyen</h5>
-                                    <span class="me-3 small">June 18, 2021 at 11:55 am</span>
-                                </div>
-                                <p>Fulfilled direction use continual set him propriety continued. Saw met applauded favorite deficient engrossed concealed and her. Concluded boy perpetual old supposing. Farther-related bed and passage comfort civilly.</p>
-                                <a href="#" class="btn btn-sm btn-light mb-0">Reply</a>
-                            </div>
-                        </div>
+                        <h3>{{ $post->reviews_count }} comments</h3>
+
+                        @include('public.layouts.partials.comment', [
+                        'reviews' => $post->reviews->whereNull('parent_id'),
+                        'level' => 0
+                        ])
                     </div>
+
+
                     <!-- Comment END -->
 
                     <!-- Form START -->
@@ -155,27 +114,42 @@ Main Content START -->
                         <h3 class="mt-3 mt-sm-0">Your Views Please!</h3>
                         <small>Your email address will not be published. Required fields are marked *</small>
 
-                        <form class="row g-3 mt-2 mb-5">
-                            <!-- Name -->
-                            <div class="col-lg-6">
-                                <label class="form-label">Name *</label>
-                                <input type="text" class="form-control" aria-label="First name">
+                        <form method="POST" action="{{ route('post.reviews.store') }}" class="row g-3" id="review-form">
+                            @csrf
+                            <!-- <input type="hidden" name="captcha_answer" value="{{ session('captcha') }}">
+                            <label>{{ session('captcha_q') }}</label>
+                            <input type="text" name="captcha_input"> -->
+
+                            <input type="hidden" name="post_id" value="{{ $post->id }}">
+                            <input type="hidden" name="parent_id" id="parent_id">
+                            <input type="text" name="website" style="display:none">
+
+                            @if(!auth()->check())
+                            <div class="col-md-6">
+                                <label>Name *</label>
+                                <input type="text" name="name" class="form-control" required>
                             </div>
-                            <!-- Email -->
-                            <div class="col-lg-6">
-                                <label class="form-label">Email *</label>
-                                <input type="email" class="form-control">
+
+                            <div class="col-md-6">
+                                <label>Email *</label>
+                                <input type="email" name="email" class="form-control" required>
                             </div>
-                            <!-- Comment -->
+                            @endif
+
                             <div class="col-12">
-                                <label class="form-label">Your Comment *</label>
-                                <textarea class="form-control" rows="3"></textarea>
+                                <label>Your Comment</label>
+                                <textarea name="comment" class="form-control" rows="3"></textarea>
                             </div>
-                            <!-- Button -->
+                            {{-- Google Recaptcha --}}
                             <div class="col-12">
-                                <button type="submit" class="btn btn-primary mb-0">Post comment</button>
+                                <div class="g-recaptcha" data-sitekey="{{ env('RECAPTCHA_SITE_KEY') }}"></div>
+                                @error('g-recaptcha-response')
+                                <small class="text-danger">{{ $message }}</small>
+                                @enderror
                             </div>
+                            <button type="submit" class="btn btn-primary">Submit</button>
                         </form>
+
                     </div>
                     <!-- Form END -->
                 </div>
@@ -194,6 +168,7 @@ Main Content END -->
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
 <script src="{{ asset('assets/js/articles/styler.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"></script>
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
 <!-- Plyr JS -->
 <script src="https://cdn.plyr.io/3.6.8/plyr.polyfilled.js"></script>
@@ -224,6 +199,33 @@ Main Content END -->
         }
     });
 </script>
+<script>
+    document.addEventListener('click', function(e) {
+        const btn = e.target.closest('.reply-btn');
+        if (!btn) return;
+
+        e.preventDefault();
+
+        const parentInput = document.getElementById('parent_id');
+        const textarea = document.querySelector('textarea[name="comment"]');
+
+        if (!parentInput || !textarea) {
+            console.error('Reply form not found');
+            return;
+        }
+
+        parentInput.value = btn.dataset.id;
+
+        document.getElementById('review-form')?.scrollIntoView({
+            behavior: 'smooth'
+        });
+
+        textarea.focus();
+    });
+</script>
+
+
+
 
 
 @endsection

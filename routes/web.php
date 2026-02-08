@@ -3,6 +3,10 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\public\PostController as PostControllerPublic;
+use App\Http\Controllers\public\CaptchaController;
+use App\Http\Controllers\public\PostReviewController as PostReviewControllerPublic;
+use App\Http\Controllers\Admin\PostReviewController;
+
 use \Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
@@ -53,6 +57,21 @@ Route::middleware([
     Route::get('/post-categories', function () {
         return view('admin.dashboard');
     })->name('posts.categories.index');
+
+    Route::get('/post-reviews/show/{review}', [PostReviewController::class, 'show'])
+        ->name('reviews.show');
+
+    Route::get('/post-reviews', [PostReviewController::class, 'index'])
+        ->name('reviews.index');
+
+    Route::get('/post-reviews/page/{page}', [PostReviewController::class, 'index'])
+        ->name('reviews.page');
+    Route::get('/post-reviews/edit/{review}', [PostReviewController::class, 'edit'])->name('reviews.edit');
+    Route::post('/post-reviews/update/{review}', [PostReviewController::class, 'update'])->name('reviews.update');
+    Route::delete('/post-reviews/delete/{review}', [PostReviewController::class, 'destroy'])->name('reviews.delete');
+    Route::delete('/post-reviews/forcedelete/{review}', [PostReviewController::class, 'forcedelete'])->name('reviews.forcedelete');
+    Route::get('/post-reviews/restore/{review}', [PostReviewController::class, 'restore'])->name('reviews.restore');
+
 
     Route::get('/media/upload', fn() => view('admin.media.upload'))->name('media.upload');
     Route::post('/media/upload', [MediaController::class, 'store'])->name('media.store');
@@ -195,3 +214,9 @@ Route::get('/blog/{slug}', [PostControllerPublic::class, 'show'])->name('public.
 Route::get('test', function () {
     return view('test');
 });
+
+
+Route::get('/captcha/image', [CaptchaController::class, 'image'])->name('captcha.image');
+Route::post('/post-reviews', [PostReviewControllerPublic::class, 'store'])
+    ->middleware('throttle:5,1')
+    ->name('post.reviews.store');

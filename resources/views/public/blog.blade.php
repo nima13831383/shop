@@ -90,7 +90,7 @@ Page content START -->
                             <a href="{{ url('/').'/blog/'.$post->slug }}">{{ $post->title }}</a>
                         </h5>
                         <p class="text-truncate-2">
-                        <p>{!! Str::limit(strip_tags($post->body), 100) !!}</p>
+                        <p>{!! Str::limit(strip_tags($post->description), 100) !!}</p>
 
                         </p>
                         <!-- Info -->

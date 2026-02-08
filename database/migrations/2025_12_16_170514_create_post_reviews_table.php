@@ -14,16 +14,17 @@ return new class extends Migration
         Schema::create('post_reviews', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('user_id')
+            $table->foreignId('user_id')->nullable()
                 ->constrained()
                 ->cascadeOnDelete();
 
             $table->foreignId('post_id')
                 ->constrained()
                 ->cascadeOnDelete();
+            $table->foreignId('parent_id')->nullable()->constrained('post_reviews')->cascadeOnDelete();
             $table->enum('status', ['approved', 'unapproved', 'pending'])->default('unapproved');
-
-            $table->unsignedTinyInteger('rating'); // 1–5
+            $table->string('name');
+            $table->string('email');
             $table->text('comment')->nullable();
             $table->softDeletes();
 

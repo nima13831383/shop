@@ -122,7 +122,7 @@
 
                 <!-- Menu item 5 -->
                 <li class="nav-item">
-                    <a class="nav-link" href="admin-review.html"><i class="far fa-comment-dots fa-fw me-2"></i>Reviews</a>
+                    <a class="nav-link" href="{{ route('admin.reviews.index') }}"><i class="far fa-comment-dots fa-fw me-2"></i>Reviews</a>
                 </li>
 
                 <!-- Menu item 6 -->
