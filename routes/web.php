@@ -60,10 +60,13 @@ Route::middleware([
 
     Route::get('/post-reviews/show/{review}', [PostReviewController::class, 'show'])
         ->name('reviews.show');
-
+    Route::post('/post-reviews/toggle-status', [PostReviewController::class, 'toggleStatus'])
+        ->name('reviews.toggleStatus');
     Route::get('/post-reviews', [PostReviewController::class, 'index'])
         ->name('reviews.index');
-
+    Route::get('/post-reviews/trash', [PostReviewController::class, 'trashed'])->name('reviews.trashed');
+    Route::get('/post-reviews/trash/page/{page}', [PostReviewController::class, 'trashed'])
+        ->name('reviews.trashed.page');
     Route::get('/post-reviews/page/{page}', [PostReviewController::class, 'index'])
         ->name('reviews.page');
     Route::get('/post-reviews/edit/{review}', [PostReviewController::class, 'edit'])->name('reviews.edit');

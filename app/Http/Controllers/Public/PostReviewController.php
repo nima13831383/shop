@@ -54,7 +54,7 @@ class PostReviewController extends Controller
 
             return back()->with('success', 'نظر شما پس از تایید نمایش داده می‌شود');
         } catch (\Throwable $e) {
-            dd($e);
+            // dd($e);
         }
     }
 }

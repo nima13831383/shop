@@ -90,6 +90,16 @@
     <!-- Template Functions -->
     <script src="{{ asset('assets/js/functions.js') }}"></script>
     @show
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    @if (session('success'))
+    <script>
+        Swal.fire({
+            icon: 'success',
+            title: 'success',
+            text: '{{ session("success") }}',
+        });
+    </script>
+    @endif
 </body>
 
 

@@ -37,7 +37,16 @@ class PostReviewController extends Controller
         return view('admin.review.index', compact('reviews'));
     }
 
+    public function trashed($page = 1)
+    {
+        $reviews = PostReview::onlyTrashed() // فقط پست‌های Soft Deleted
+            ->latest()
+            ->with(['post', 'user'])
+            ->latest()
+            ->paginate(4, ['*'], 'page', $page);
 
+        return view('admin.review.index-trash', compact('reviews'));
+    }
     /**
      * فرم ویرایش کامنت
      */
@@ -104,5 +113,17 @@ class PostReviewController extends Controller
         return redirect()
             ->route('admin.reviews.index')
             ->with('success', 'کامنت با موفقیت بازیابی شد.');
+    }
+    public function toggleStatus(Request $request)
+    {
+        $review = PostReview::findOrFail($request->id);
+
+        $review->status = $request->status;
+        $review->save();
+
+        return response()->json([
+            'message' => "وضعیت کامنت با موفقیت تغییر کرد.",
+            'status' => $review->status
+        ]);
     }
 }

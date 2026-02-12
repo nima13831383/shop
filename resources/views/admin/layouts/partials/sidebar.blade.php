@@ -121,8 +121,31 @@
                 </li>
 
                 <!-- Menu item 5 -->
+
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('admin.reviews.index') }}"><i class="far fa-comment-dots fa-fw me-2"></i>Reviews</a>
+                    <a
+                        class="nav-link"
+                        data-bs-toggle="collapse"
+                        href="#collapsepage2"
+                        role="button"
+                        aria-expanded="false"
+                        aria-controls="collapsepage2">
+                        <i class="far fa-comment-dots fa-fw me-2"></i>
+                        Reviews
+                    </a>
+                    <!-- Submenu -->
+                    <ul
+                        class="nav collapse flex-column"
+                        id="collapsepage2"
+                        data-bs-parent="#navbar-sidebar">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('admin.reviews.index') }}">Reviews</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('admin.reviews.trashed') }}">Trashed</a>
+                        </li>
+
+                    </ul>
                 </li>
 
                 <!-- Menu item 6 -->

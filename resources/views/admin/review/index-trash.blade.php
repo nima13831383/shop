@@ -13,7 +13,7 @@
         </div>
         @endif
         <div class="col-12">
-            <h1 class="h3 mb-0">Reviews</h1>
+            <h1 class="h3 mb-0">trashed Reviews</h1>
         </div>
     </div>
 
@@ -87,15 +87,15 @@
 
                         <!-- Actions -->
                         <td>
-                            <!-- Edit -->
-                            <a href="{{ route('admin.reviews.edit', $review->id) }}"
+                            <!-- restore -->
+                            <a href="{{ route('admin.reviews.restore', $review->id) }}"
                                 class="btn btn-success-soft btn-round me-1 mb-1 mb-md-0"
-                                data-bs-toggle="tooltip" data-bs-placement="top" title="Edit">
-                                <i class="bi bi-pencil-square"></i>
+                                data-bs-toggle="tooltip" data-bs-placement="top" title="restore">
+                                <i class="bi bi-check"></i>
                             </a>
 
                             <!-- Delete -->
-                            <form action="{{ route('admin.reviews.delete', $review->id) }}"
+                            <form action="{{ route('admin.reviews.forcedelete', $review->id) }}"
                                 method="POST"
                                 class="d-inline">
                                 @csrf
@@ -132,7 +132,7 @@
             <!-- Pagination START -->
             <div class="d-sm-flex justify-content-sm-between align-items-sm-center">
                 <!-- Pagination -->
-                {{ $reviews->links('vendor.pagination.admin-review-pag') }}
+                {{ $reviews->links('vendor.pagination.admin-review-pag-trash') }}
             </div>
             <!-- Pagination END -->
         </div>
