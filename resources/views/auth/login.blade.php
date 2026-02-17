@@ -148,9 +148,10 @@
                                 <!-- Social Login -->
                                 <div class="row">
                                     <div class="col-xxl-6 d-grid">
-                                        <a href="#" class="btn bg-google mb-2">
+                                        <a href="{{ route('google.redirect') }}" class="btn bg-google mb-2">
                                             <i class="fab fa-google text-white me-2"></i>Login with Google
                                         </a>
+
                                     </div>
                                     <div class="col-xxl-6 d-grid">
                                         <a href="#" class="btn bg-facebook">

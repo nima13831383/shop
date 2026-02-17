@@ -13,7 +13,8 @@ use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 
-class User extends Authenticatable implements MustVerifyEmail{
+class User extends Authenticatable implements MustVerifyEmail
+{
     use HasApiTokens;
 
     /** @use HasFactory<\Database\Factories\UserFactory> */
@@ -33,6 +34,7 @@ class User extends Authenticatable implements MustVerifyEmail{
         'name',
         'email',
         'password',
+        'email_verified_at'
     ];
 
     /**

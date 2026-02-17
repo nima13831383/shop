@@ -6,6 +6,7 @@ use App\Http\Controllers\public\PostController as PostControllerPublic;
 use App\Http\Controllers\public\CaptchaController;
 use App\Http\Controllers\public\PostReviewController as PostReviewControllerPublic;
 use App\Http\Controllers\Admin\PostReviewController;
+use App\Http\Controllers\public\GoogleAuthController;
 
 use \Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -223,3 +224,8 @@ Route::get('/captcha/image', [CaptchaController::class, 'image'])->name('captcha
 Route::post('/post-reviews', [PostReviewControllerPublic::class, 'store'])
     ->middleware('throttle:5,1')
     ->name('post.reviews.store');
+
+
+
+Route::get('/auth/google', [GoogleAuthController::class, 'redirect'])->name('google.redirect');
+Route::get('/auth/google/callback', [GoogleAuthController::class, 'callback'])->name('google.callback');
